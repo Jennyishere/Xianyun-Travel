@@ -1,6 +1,7 @@
 <template>
-  <div class="index">
-    首页
+  <div class="postIndex">
+      攻略首页
+      
   </div>
 </template>
 

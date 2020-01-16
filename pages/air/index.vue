@@ -1,6 +1,6 @@
 <template>
-  <div class="index">
-    首页
+  <div class="airindex">
+      机票的首页
   </div>
 </template>
 

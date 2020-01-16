@@ -1,6 +1,6 @@
 <template>
-  <div class="index">
-    首页
+  <div class="hotelIndex">
+      酒店主页
   </div>
 </template>
 
