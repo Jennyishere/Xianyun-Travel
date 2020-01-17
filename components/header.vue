@@ -12,7 +12,18 @@
         <nuxt-link to="/hotel">酒店</nuxt-link>
         <nuxt-link to="/air">国内机票</nuxt-link>
       </el-row>
-      <div class="right">
+      <el-dropdown v-if="$store.state.user.userInfo.token">
+        <span class="el-dropdown-link">
+          <img :src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar" />
+          {{$store.state.user.userInfo.user.nickname}}
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>个人中心</el-dropdown-item>
+          <el-dropdown-item>退出</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <div class="right" v-else>
         <nuxt-link to="/user/login">登录/注册</nuxt-link>
       </div>
     </el-row>
@@ -59,8 +70,8 @@ export default {};
   line-height: 60px;
   height: 60px;
   a {
-    display: block;
-    padding: 0 20px;
+    // display: block;
+    // padding: 0 20px;
     box-sizing: border-box;
     height: 60px;
   }
@@ -70,6 +81,14 @@ export default {};
   color: #fff;
   &:hover {
     color: #fff;
+  }
+}
+.el-dropdown-link {
+  img {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    vertical-align: middle;
   }
 }
 </style>

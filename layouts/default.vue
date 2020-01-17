@@ -30,4 +30,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
+em,i {
+  font-style: normal;
+}
 </style>
