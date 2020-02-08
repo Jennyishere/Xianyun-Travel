@@ -1,12 +1,13 @@
 <template>
   <div class="container">
+    <!-- 轮播图 -->
     <el-carousel trigger="click" height="700px">
       <el-carousel-item v-for="(item,index) in banners" :key="index">
         <div
           class="banner"
           :style="`background:url(${$axios.defaults.baseURL+item.url}) center center no-repeat`"
         >
-          <!-- <img :src="item" alt=""> -->
+          <!-- <img :src="item" alt=""> 使用背景图 当窗口改变时可以自适应--> 
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -55,6 +56,7 @@ export default {
   },
   // mounted start
   mounted() {
+    // 获取轮播图片
     this.$axios({
       url: "/scenics/banners"
     }).then(res => {

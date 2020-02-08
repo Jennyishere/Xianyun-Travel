@@ -62,19 +62,14 @@ export default {
             // console.log(this.users);
             this.$refs.users.validate((valid) => {
                 if(valid) {
-                    this.$axios({
-                        method: 'post',
-                        url:'/accounts/login',
-                        data:this.users
-                    }).then(res=> {
-                        console.log(res);
-                        // 将数据存到store里
-                        this.$store.commit('user/setUserInfo',res.data)
-                        console.log(this.$store.state.user);
-                        console.log(this.$store.state.user.userInfo.token);
-                        // 跳转
-                        this.$router.push('/')
+                  //  调用dispatch方法给store赋值 把用户数据传过去
+                  this.$store.dispatch('user/login',this.users).then(res=> {
+                    this.$message({
+                      message: '登录成功，正在跳转',
+                      type: 'success'
                     })
+                    this.$router.replace('/')
+                  })
                 }else {
                     return false;
                 }
