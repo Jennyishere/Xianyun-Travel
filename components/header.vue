@@ -16,11 +16,15 @@
         <span class="el-dropdown-link">
           <img :src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar" />
           {{$store.state.user.userInfo.user.nickname}}
-          <i class="el-icon-arrow-down el-icon--right"></i>
+          <i
+            class="el-icon-arrow-down el-icon--right"
+          ></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item>
+            <div @click="exit">退出</div>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <div class="right" v-else>
@@ -31,7 +35,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    exit() {
+      this.$store.commit("user/setUserInfo", {});
+    }
+  }
+};
 </script>
 
 <style scoped lang="less">
