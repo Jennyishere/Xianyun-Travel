@@ -17,6 +17,7 @@ export const mutations = {
 
 export const actions = {
     // 相当于封装的api文件
+    // 登录接口
     login(store, data) {
         this.$axios({
             method: 'post',
@@ -29,5 +30,31 @@ export const actions = {
             store.commit('setUserInfo', data)
             return data;
         })
+    },
+    // 注册
+    register(store, data) {
+
+        this.$axios({
+            method:'POST',
+            url:'/accounts/register',
+            data
+        }).then(res=> {
+            store.commit('setUserInfo',res.data)
+            return res.data;
+        })
+    },
+    // 发送验证码
+    Captcha(store, data) {
+        this.$axios({
+            method:'POST',
+            url:'/captchas',
+            data: {
+                tel: data
+            }
+        }).then(res=> {
+            return res;
+        })
     }
+
+
 }

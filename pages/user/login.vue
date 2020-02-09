@@ -11,7 +11,8 @@
           >{{e}}</span>
           <!-- <span>注册</span> -->
         </el-row>
-        <loginForm class="form"></loginForm>
+        <loginForm class="form" v-if="currentTab==0"></loginForm>
+        <registerForm v-if="currentTab==1"></registerForm>
       </div>
     </div>
   </div>
@@ -19,13 +20,15 @@
 
 <script>
 import loginForm from "@/components/user/loginForm";
+import registerForm from "@/components/user/registerForm";
 export default {
   components: {
-    loginForm
+    loginForm,
+    registerForm
   },
   data() {
     return {
-      currentTab: 0
+      currentTab: 1
     };
   },
   // 点击切换tab栏
@@ -70,5 +73,4 @@ export default {
     }
   }
 }
-
 </style>
