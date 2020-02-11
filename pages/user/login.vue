@@ -40,7 +40,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .container {
   min-width: 1000px;
   height: 700px;

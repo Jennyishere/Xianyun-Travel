@@ -88,13 +88,13 @@ export default {
       // 先判断手机号是否为空
       if (this.user.username == "") {
         return;
-      } else {
+      } 
         console.log(this.user.username);
 
         this.$store.dispatch("user/Captcha", this.user.username).then(res => {
           this.$message.success('验证码为000000')
         });
-      }
+      
     },
     handleRegSubmit() {
         this.$refs.user.validate((valid)=> {

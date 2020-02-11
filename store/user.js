@@ -19,7 +19,7 @@ export const actions = {
     // 相当于封装的api文件
     // 登录接口
     login(store, data) {
-        this.$axios({
+        return this.$axios({
             method: 'post',
             url: '/accounts/login',
             data
@@ -33,25 +33,24 @@ export const actions = {
     },
     // 注册
     register(store, data) {
-
-        this.$axios({
-            method:'POST',
-            url:'/accounts/register',
+       return this.$axios({
+            method: 'POST',
+            url: '/accounts/register',
             data
-        }).then(res=> {
-            store.commit('setUserInfo',res.data)
+        }).then(res => {
+            store.commit('setUserInfo', res.data)
             return res.data;
         })
     },
     // 发送验证码
     Captcha(store, data) {
-        this.$axios({
-            method:'POST',
-            url:'/captchas',
+        return this.$axios({
+            method: 'POST',
+            url: '/captchas',
             data: {
                 tel: data
             }
-        }).then(res=> {
+        }).then(res => {
             return res;
         })
     }
