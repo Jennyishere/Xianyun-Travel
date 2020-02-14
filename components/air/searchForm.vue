@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import momment from 'moment'
+import momment from "moment";
 export default {
   data() {
     return {
@@ -85,19 +85,22 @@ export default {
     },
     // 出发城市的下拉
     handleDepartSelect(item) {
-        // console.log(item); item可以拿到当前的选项的信息        
-        // 把选中的城市的code赋给数据
-        this.departCode = item.sort
+      // console.log(item); item可以拿到当前的选项的信息
+      // 把选中的城市的code赋给数据
+      this.departCode = item.sort;
     },
     // 目的城市的下拉
     handleDestSelect(item) {
-        this.destCode = item.sort
-
+      this.destCode = item.sort;
     },
     // 出发城市搜索的监听
     queryDepartSearch(value, callback) {
       //   如果输入框为空
-      if (!value) return;
+      if (!value) {
+        this.departDate = [];
+        callback([]);
+        return;
+      }
       //   多出使用 银川封装在actions里
       this.$store.dispatch("airs/citySearch", value).then(res => {
         this.departData = res;
@@ -106,7 +109,13 @@ export default {
     },
     // 目的城市搜索的监听
     queryDestSearch(value, callback) {
-      if (!value) return;
+      if (!value) {
+        // 如果为空就把数据清空
+        this.destData = [];
+        // 给个空数组就不在加载中
+        callback([]);
+        return;
+      }
       this.$store.dispatch("airs/citySearch", value).then(res => {
         this.destData = res;
         callback(res);
@@ -114,6 +123,7 @@ export default {
     },
     // 出发城市输入框失焦
     handleDepartBlur() {
+      if (this.form.departCity.length === 0) return;
       if (this.departData.length == 0) return;
       // 非空时默认选中第一个 因为在input事件里已经把数据存下来了
       this.form.departCity = this.departData[0].value;
@@ -121,27 +131,46 @@ export default {
     },
     // 目的城市输入框失焦
     handleDestBlur() {
+       if (this.form.destCity.length === 0) return;
       if (this.destData.length == 0) return;
       // 非空时默认选中第一个
-        this.form.destCity = this.destData[0].value
-        this.form.destCode = this.destData[0].sort
+      this.form.destCity = this.destData[0].value;
+      this.form.destCode = this.destData[0].sort;
     },
     // 处理时间
     hadleDate(value) {
-    //   console.log(value);
-      this.form.departDate = momment(value).format('YYYY-MM-DD')
+      //   console.log(value);
+      this.form.departDate = momment(value).format("YYYY-MM-DD");
     },
     // 点击交换出发和目的地
-    handleReverse() {},
+    handleReverse() {
+      const { departCity, departCode, destCity, destCode } = this.form;
+      this.form.departCity = destCity;
+      this.form.departCode = destCode;
+      this.form.destCity = departCity;
+      this.form.destCode = departCode;
+    },
     //提交表单
     handleSubmit() {
       console.log(this.form);
-    //   获取所有的数据后就可以跳转了
-    this.$router.push({
-        path:'air/flights',
+      if (!this.form.departCity) {
+        this.$message.error("请输入出发城市");
+        return;
+      }
+      if (!this.form.destCity) {
+        this.$message.error("请输入到达城市");
+        return;
+      }
+      if (!this.form.departDate) {
+        this.$message.error("请选择时间");
+        return;
+      }
+      //   获取所有的数据后就可以跳转了
+      this.$router.push({
+        path: "air/flights",
         // 传参
         query: this.form
-    })
+      });
     }
   }
 };
