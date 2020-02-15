@@ -5,7 +5,7 @@
       <div class="flights-content">
         <!-- 过滤条件 -->
         <div>
-          <FlightsFilters :data="flightsData"/>
+          <FlightsFilters :data="cacheFlightsData" @setDataList="setDataList" />
         </div>
 
         <!-- 航班头部布局 -->
@@ -41,7 +41,7 @@
 <script>
 import FlightsListHead from "@/components/air/flightsListHead";
 import FlightsItem from "@/components/air/flightsItem";
-import FlightsFilters from "@/components/air/flightsFilters.vue"
+import FlightsFilters from "@/components/air/flightsFilters.vue";
 export default {
   components: {
     FlightsListHead,
@@ -51,7 +51,14 @@ export default {
   data() {
     return {
       flightsData: {
-        // 为了解决undefined的问题  
+        // 为了解决undefined的问题
+        flights: [],
+        info: {},
+        options: {}
+      },
+      cacheFlightsData: {
+        // 缓存一份数据，只会修改一次
+        flights: [],
         info: {},
         options: {}
       },
@@ -59,6 +66,7 @@ export default {
 
       PageSize: 5, //显示条数
       pageIndex: 1,
+      total: 0
     };
   },
   mounted() {
@@ -68,6 +76,8 @@ export default {
     }).then(res => {
       console.log(res);
       this.flightsData = res.data;
+      // 备份数据
+      this.cacheFlightsData = { ...res.data };
       // this.dataList = res.data.flights;
       this.setDataList();
     });
@@ -81,15 +91,22 @@ export default {
     // 当前页改变
     handleCurrentChange(val) {
       this.pageIndex = val;
+      console.log(this.pageIndex);
+      
       this.setDataList();
     },
     // 切割数据
-    setDataList() {
+    setDataList(arr) {
+      // 接受子组件的数据
+      if (arr) {
+        this.pageIndex = 1;
+        this.flightsData.flights = arr;
+        this.flightsData.total = arr.length;
+      }
       this.dataList = this.flightsData.flights.slice(
         (this.pageIndex - 1) * this.PageSize,
         this.pageIndex * this.PageSize
       );
-      
     }
   }
 };
