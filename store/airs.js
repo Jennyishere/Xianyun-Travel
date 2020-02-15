@@ -1,4 +1,14 @@
-
+export const state = ()=> {
+  return {
+    history:[]
+  }
+}
+export const mutations= {
+  setHistory(state, data) {
+    // 将数据push到数组里
+    state.history.push(data)
+  }
+}
 export const actions= {
     citySearch(store, data) {
       return this.$axios({
@@ -16,5 +26,7 @@ export const actions= {
              return selectData;
            
           });
-    }
+    },
+    // 搜索历史
+   
 }

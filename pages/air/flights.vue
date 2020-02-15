@@ -33,6 +33,7 @@
       <!-- 侧边栏 -->
       <div class="aside">
         <!-- 侧边栏组件 -->
+        <FlightsAside />
       </div>
     </el-row>
   </section>
@@ -42,11 +43,13 @@
 import FlightsListHead from "@/components/air/flightsListHead";
 import FlightsItem from "@/components/air/flightsItem";
 import FlightsFilters from "@/components/air/flightsFilters.vue";
+import FlightsAside from "@/components/air/flightsAside";
 export default {
   components: {
     FlightsListHead,
     FlightsItem,
-    FlightsFilters
+    FlightsFilters,
+    FlightsAside
   },
   data() {
     return {
@@ -69,8 +72,18 @@ export default {
       total: 0
     };
   },
+  // 当<FlightsAside/>的路由改变后页面没有刷新 因为mounted及事件缓存 需要添加一个监听$route()事件重新加载页面或添加组件导航守卫
+  beforeRouteUpdate(to, from, next) {
+    next()//需要先next 不然后面的代码不会执行
+    this.getData();
+  },
   mounted() {
-    this.$axios({
+    this.getData();
+  },
+  methods: {
+    // 页面加载时的数据获取
+    getData() {
+      this.$axios({
       url: "/airs",
       params: this.$route.query
     }).then(res => {
@@ -81,8 +94,7 @@ export default {
       // this.dataList = res.data.flights;
       this.setDataList();
     });
-  },
-  methods: {
+    },
     // 条数改变时 把值给pageSize
     handleSizeChange(val) {
       this.PageSize = val;
@@ -92,7 +104,7 @@ export default {
     handleCurrentChange(val) {
       this.pageIndex = val;
       console.log(this.pageIndex);
-      
+
       this.setDataList();
     },
     // 切割数据

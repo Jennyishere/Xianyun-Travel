@@ -165,6 +165,8 @@ export default {
         this.$message.error("请选择时间");
         return;
       }
+      // 跳转之前把记录存到store里
+      this.$store.commit('airs/setHistory',this.form)
       //   获取所有的数据后就可以跳转了
       this.$router.push({
         path: "air/flights",

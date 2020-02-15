@@ -47,7 +47,8 @@
             </el-col>
             <el-col :span="5" class="price">￥{{item.par_price}}</el-col>
             <el-col :span="3" class="choose-button">
-              <el-button type="warning" size="mini">选定</el-button>
+              <!-- 跳转时看后台人员需要什么数据 -->
+              <el-button type="warning" size="mini" @click="PickSeat(data.id,item.seat_xid)">选定</el-button>
               <p>剩余：{{item.discount}}</p>
             </el-col>
           </el-row>
@@ -92,6 +93,19 @@ export default {
       }
       // 反回需要的值
       return `${Math.floor(time / 60)} 时 ${time % 60} 分`;
+    }
+  },
+  methods: {
+    PickSeat(id,seatId) {
+      // 跳转 带着参数id 和xid
+      this.$router.push({
+        path: '/air/order',
+        query: {
+          id,
+          seat_xid: seatId
+        }
+      })
+      
     }
   }
 };
