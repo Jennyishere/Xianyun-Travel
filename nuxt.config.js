@@ -55,8 +55,8 @@ export default {
  // todo 第四个修改的地方 
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    // baseURL: "http://157.122.54.189:9095" // 新增备用地址
-    baseURL: "http://127.0.0.1:1337" // 新增axios默认请求路径 		  
+    baseURL: "http://157.122.54.189:9095" // 新增备用地址
+    // baseURL: "http://127.0.0.1:1337" // 新增axios默认请求路径 		  
   },
   build: {
     transpile: [/^element-ui/],
