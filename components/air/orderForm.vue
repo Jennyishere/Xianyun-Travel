@@ -86,6 +86,7 @@ export default {
         seat_xid: this.$route.query.seat_xid,
         air: this.$route.query.id
       },
+      // 当前机票信息
       infoData: {
         insurances: [] // 初始化保险数据
       }
@@ -103,6 +104,8 @@ export default {
     }).then(res => {
       console.log(res);
       this.infoData = res.data;
+      // 存到store里
+      this.$store.commit("airs/setOrderDetail", res.data);
     });
   },
   methods: {
@@ -194,11 +197,11 @@ export default {
       this.$axios({
         method: "post",
         url: "/airorders",
-        data: this.form,
-        headers: {
-          // 必须要做token前面加上`Bearer `字符串，后面有一个空格的
-          Authorization: `Bearer ` + this.$store.state.user.userInfo.token
-        }
+        data: this.form
+        // headers: {
+        //   // 必须要做token前面加上`Bearer `字符串，后面有一个空格的
+        //   Authorization: `Bearer ` + this.$store.state.user.userInfo.token
+        // }
       }).then(res => {
         console.log(res);
       });

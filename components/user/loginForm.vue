@@ -68,7 +68,8 @@ export default {
                       message: '登录成功，正在跳转',
                       type: 'success'
                     })
-                    this.$router.replace('/')
+                    // 如果从其他页面跳过来要求登录 登录完就跳回去
+                    this.$router.replace(this.$route.query.returnUrl || '/')
                   })
                 }else {
                     return false;

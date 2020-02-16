@@ -1,12 +1,21 @@
 export const state = ()=> {
   return {
-    history:[]
+    history:[],
+
+    // 订单详情
+    orderDetail: {
+      seat_infos: {}
+    }
   }
 }
 export const mutations= {
   setHistory(state, data) {
     // 将数据push到数组里
-    state.history.push(data)
+    state.history.unshift(data)
+    state.history.length = 5
+  },
+  setOrderDetail(state,data) {
+    state.orderDetail = data
   }
 }
 export const actions= {
