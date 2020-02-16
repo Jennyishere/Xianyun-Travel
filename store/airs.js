@@ -5,7 +5,9 @@ export const state = ()=> {
     // 订单详情
     orderDetail: {
       seat_infos: {}
-    }
+    },
+
+    totalPrice:''
   }
 }
 export const mutations= {
@@ -16,7 +18,10 @@ export const mutations= {
   },
   setOrderDetail(state,data) {
     state.orderDetail = data
-  }
+  },
+  setTotalPrice(state,data) {
+    state.totalPrice = data
+  },
 }
 export const actions= {
     citySearch(store, data) {

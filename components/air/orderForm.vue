@@ -64,6 +64,7 @@
         <el-button type="warning" class="submit" @click="handleSubmit">提交订单</el-button>
       </div>
     </div>
+    <div>{{totalPrice}}</div>
   </div>
 </template>
 
@@ -91,6 +92,30 @@ export default {
         insurances: [] // 初始化保险数据
       }
     };
+  },
+  // 监听多个对象 计算价格
+  computed: {
+    totalPrice() {
+      // 先判断数据是否返回了
+      if (!this.infoData.seat_infos) return;
+
+      let price = 0;
+      // 单价
+      price += this.infoData.seat_infos.org_settle_price;
+      // 燃油费
+      price += this.infoData.airport_tax_audlet;
+      // 保险
+      this.infoData.insurances.forEach(v => {
+        if (this.form.insurances.indexOf(v.id) > -1) {
+          price += v.price;
+        }
+      });
+      // 乘以人数
+      price *= this.form.users.length;
+      // 把价格存到store里
+      this.$store.commit('airs/setTotalPrice', price)
+      return price;
+    }
   },
   mounted() {
     //   获取当前的机票信息
