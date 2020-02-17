@@ -222,13 +222,20 @@ export default {
       this.$axios({
         method: "post",
         url: "/airorders",
-        data: this.form
-        // headers: {
-        //   // 必须要做token前面加上`Bearer `字符串，后面有一个空格的
-        //   Authorization: `Bearer ` + this.$store.state.user.userInfo.token
-        // }
+        data: this.form,
+        headers: {
+          // 必须要做token前面加上`Bearer `字符串，后面有一个空格的
+          Authorization: `Bearer ` + this.$store.state.user.userInfo.token
+        }
       }).then(res => {
         console.log(res);
+        this.$message.success("订单提交成功");
+        this.$router.push({
+          path: '/air/pay',
+          query: {
+            id: res.data.data.id
+          }
+        })
       });
     }
   }
